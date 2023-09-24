@@ -1,4 +1,0 @@
-../components/imu/imu_public.c:13:12:imu_init	2
-../components/imu/imu_public.c:26:12:imu_set_config	2
-../components/imu/imu_public.c:41:12:imu_config	3
-../components/imu/imu_public.c:57:12:imu_config_mpu9250	4

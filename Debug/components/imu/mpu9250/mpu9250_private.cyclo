@@ -1,6 +1,0 @@
-../components/imu/mpu9250/mpu9250_private.c:141:12:mpu9250_init	2
-../components/imu/mpu9250/mpu9250_private.c:153:12:mpu9250_set_config	2
-../components/imu/mpu9250/mpu9250_private.c:172:12:mpu9250_config	10
-../components/imu/mpu9250/mpu9250_private.c:260:12:mpu9250_get_accel_raw	6
-../components/imu/mpu9250/mpu9250_private.c:282:12:mpu9250_get_gyro_raw	6
-../components/imu/mpu9250/mpu9250_private.c:304:12:mpu9250_destroy	2
