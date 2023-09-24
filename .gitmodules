@@ -1,0 +1,6 @@
+[submodule "components/imu"]
+	path = components/imu
+	url = git@github.com:phonght32/imu.git
+[submodule "components/mcu_port"]
+	path = components/mcu_port
+	url = git@github.com:phonght32/mcu_port.git
