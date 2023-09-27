@@ -51,6 +51,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/quadcopter_firmware/components/imu}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/quadcopter_firmware/components/mcu_port}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/quadcopter_firmware/components/imu/mpu6500}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/quadcopter_firmware/components/imu/ak8963}&quot;"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.1735464642" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
 							</tool>
