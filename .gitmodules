@@ -7,3 +7,6 @@
 [submodule "components/bldc_motor"]
 	path = components/bldc_motor
 	url = git@github.com:phonght32/bldc_motor.git
+[submodule "components/imu_filter"]
+	path = components/imu_filter
+	url = git@github.com:phonght32/imu_filter.git
