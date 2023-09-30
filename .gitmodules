@@ -10,3 +10,6 @@
 [submodule "components/imu_filter"]
 	path = components/imu_filter
 	url = git@github.com:phonght32/imu_filter.git
+[submodule "components/mavlink_c"]
+	path = components/mavlink_c
+	url = git@github.com:phonght32/mavlink_c.git
