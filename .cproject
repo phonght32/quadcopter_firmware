@@ -59,7 +59,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/quadcopter_firmware/components/imu/ak8963}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/quadcopter_firmware/components/imu/mpu6050}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/quadcopter_firmware/components/bldc_motor}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/quadcopter_firmware/components/imu_filter}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/quadcopter_firmware/components/imu_filter/madgwick}&quot;"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.1735464642" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
 							</tool>
@@ -86,11 +86,11 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Core"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Drivers"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="components/bldc_motor"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="components/imu"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="components/imu_filter"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Core"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Drivers"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
