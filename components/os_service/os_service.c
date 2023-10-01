@@ -4,7 +4,7 @@
 #include "os_service.h"
 
 
-void regular_task_main(void const * argument)
+void regular_task_main(void *argument)
 {
 	while (1)
 	{
@@ -13,7 +13,7 @@ void regular_task_main(void const * argument)
 	vTaskDelete(NULL);
 }
 
-void critical_task_main(void const * argument)
+void critical_task_main(void *argument)
 {
 	while (1)
 	{

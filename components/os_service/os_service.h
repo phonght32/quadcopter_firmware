@@ -14,7 +14,7 @@ extern "C" {
  *
  * @return 	None.
  */
-void regular_task_main(void const * argument);
+void regular_task_main(void *argument);
 
 /*
  * @brief   Critical task main.
@@ -23,7 +23,7 @@ void regular_task_main(void const * argument);
  *
  * @return 	None.
  */
-void critical_task_main(void const * argument);
+void critical_task_main(void *argument);
 
 #ifdef __cplusplus
 }

@@ -38,29 +38,34 @@
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
 /* USER CODE END Variables */
-osThreadId defaultTaskHandle;
-osThreadId critical_taskHandle;
-osThreadId regular_taskHandle;
+/* Definitions for defaultTask */
+osThreadId_t defaultTaskHandle;
+const osThreadAttr_t defaultTask_attributes = {
+    .name = "defaultTask",
+    .stack_size = 128 * 4,
+    .priority = (osPriority_t) osPriorityNormal,
+};
+/* Definitions for critical_task */
+osThreadId_t critical_taskHandle;
+const osThreadAttr_t critical_task_attributes = {
+    .name = "critical_task",
+    .stack_size = 256 * 4,
+    .priority = (osPriority_t) osPriorityHigh,
+};
+/* Definitions for regular_task */
+osThreadId_t regular_taskHandle;
+const osThreadAttr_t regular_task_attributes = {
+    .name = "regular_task",
+    .stack_size = 256 * 4,
+    .priority = (osPriority_t) osPriorityNormal,
+};
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
 /* USER CODE END FunctionPrototypes */
-void StartDefaultTask(void const * argument);
-extern void critical_task_main(void const * argument);
-extern void regular_task_main(void const * argument);
+void StartDefaultTask(void *argument);
+extern void critical_task_main(void *argument);
+extern void regular_task_main(void *argument);
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
-/* GetIdleTaskMemory prototype (linked to static allocation support) */
-void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize );
-/* USER CODE BEGIN GET_IDLE_TASK_MEMORY */
-static StaticTask_t xIdleTaskTCBBuffer;
-static StackType_t xIdleStack[configMINIMAL_STACK_SIZE];
-void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize )
-{
-  *ppxIdleTaskTCBBuffer = &xIdleTaskTCBBuffer;
-  *ppxIdleTaskStackBuffer = &xIdleStack[0];
-  *pulIdleTaskStackSize = configMINIMAL_STACK_SIZE;
-  /* place for user code */
-}
-/* USER CODE END GET_IDLE_TASK_MEMORY */
 /**
   * @brief  FreeRTOS initialization
   * @param  None
@@ -82,18 +87,18 @@ void MX_FREERTOS_Init(void) {
     /* add queues, ... */
     /* USER CODE END RTOS_QUEUES */
     /* Create the thread(s) */
-    /* definition and creation of defaultTask */
-    osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
-    defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
-    /* definition and creation of critical_task */
-    osThreadDef(critical_task, critical_task_main, osPriorityHigh, 0, 256);
-    critical_taskHandle = osThreadCreate(osThread(critical_task), NULL);
-    /* definition and creation of regular_task */
-    osThreadDef(regular_task, regular_task_main, osPriorityNormal, 0, 256);
-    regular_taskHandle = osThreadCreate(osThread(regular_task), NULL);
+    /* creation of defaultTask */
+    defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
+    /* creation of critical_task */
+    critical_taskHandle = osThreadNew(critical_task_main, NULL, &critical_task_attributes);
+    /* creation of regular_task */
+    regular_taskHandle = osThreadNew(regular_task_main, NULL, &regular_task_attributes);
     /* USER CODE BEGIN RTOS_THREADS */
     /* add threads, ... */
     /* USER CODE END RTOS_THREADS */
+    /* USER CODE BEGIN RTOS_EVENTS */
+    /* add events, ... */
+    /* USER CODE END RTOS_EVENTS */
 }
 /* USER CODE BEGIN Header_StartDefaultTask */
 /**
@@ -102,7 +107,7 @@ void MX_FREERTOS_Init(void) {
   * @retval None
   */
 /* USER CODE END Header_StartDefaultTask */
-void StartDefaultTask(void const * argument)
+void StartDefaultTask(void *argument)
 {
     /* USER CODE BEGIN StartDefaultTask */
     /* Infinite loop */
