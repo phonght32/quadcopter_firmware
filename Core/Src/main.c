@@ -54,9 +54,7 @@ bldc_motor_handle_t motor_back_right = NULL;
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
-err_code_t SystemIMU_Config(void);
-err_code_t SystemIMUFilter_Config(void);
-err_code_t SystemMotor_Config(void);
+
 /* USER CODE END PFP */
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
@@ -140,20 +138,7 @@ void SystemClock_Config(void)
     }
 }
 /* USER CODE BEGIN 4 */
-err_code_t SystemIMU_Config(void)
-{
-    return ERR_CODE_SUCCESS;
-}
 
-err_code_t SystemIMUFilter_Config(void)
-{
-    return ERR_CODE_SUCCESS;
-}
-
-err_code_t SystemMotor_Config(void)
-{
-    return ERR_CODE_SUCCESS;
-}
 /* USER CODE END 4 */
 /**
   * @brief  This function is executed in case of error occurrence.
