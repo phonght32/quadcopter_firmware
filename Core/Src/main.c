@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "cmsis_os.h"
 #include "dma.h"
 #include "spi.h"
 #include "tim.h"
@@ -54,6 +55,7 @@ bldc_motor_handle_t motorbr_handle = NULL;
 /* USER CODE END PV */
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
+void MX_FREERTOS_Init(void);
 /* USER CODE BEGIN PFP */
 err_code_t SystemIMU_Config(void);
 err_code_t SystemIMUFilter_Config(void);
@@ -93,6 +95,11 @@ int main(void)
     SystemIMUFilter_Config();
     SystemMotor_Config();
     /* USER CODE END 2 */
+    /* Call init function for freertos objects (in freertos.c) */
+    MX_FREERTOS_Init();
+    /* Start scheduler */
+    osKernelStart();
+    /* We should never get here as control is now taken by the scheduler */
     /* Infinite loop */
     /* USER CODE BEGIN WHILE */
     while (1)
