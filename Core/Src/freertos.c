@@ -24,6 +24,7 @@
 #include "cmsis_os.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "os_service.h"
 /* USER CODE END Includes */
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
@@ -38,10 +39,14 @@
 /* USER CODE BEGIN Variables */
 /* USER CODE END Variables */
 osThreadId defaultTaskHandle;
+osThreadId critical_taskHandle;
+osThreadId regular_taskHandle;
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
 /* USER CODE END FunctionPrototypes */
 void StartDefaultTask(void const * argument);
+extern void critical_task_main(void const * argument);
+extern void regular_task_main(void const * argument);
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 /* GetIdleTaskMemory prototype (linked to static allocation support) */
 void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize );
@@ -80,6 +85,12 @@ void MX_FREERTOS_Init(void) {
     /* definition and creation of defaultTask */
     osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
     defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
+    /* definition and creation of critical_task */
+    osThreadDef(critical_task, critical_task_main, osPriorityHigh, 0, 256);
+    critical_taskHandle = osThreadCreate(osThread(critical_task), NULL);
+    /* definition and creation of regular_task */
+    osThreadDef(regular_task, regular_task_main, osPriorityNormal, 0, 256);
+    regular_taskHandle = osThreadCreate(osThread(regular_task), NULL);
     /* USER CODE BEGIN RTOS_THREADS */
     /* add threads, ... */
     /* USER CODE END RTOS_THREADS */
