@@ -33,10 +33,13 @@ typedef StaticEventGroup_t osStaticEventGroupDef_t;
 /* USER CODE BEGIN PD */
 #define OS_CYCLIC_TIMER_TICK    5
 
-#define OS_EVENT_CYCLIC_5MS 	1
-#define OS_EVENT_CYCLIC_10MS 	2
-#define OS_EVENT_CYCLIC_20MS 	4
-#define OS_EVENT_CYCLIC_40MS 	8
+#define OS_TASK_BLOCKING        portMAX_DELAY
+#define OS_TASK_NON_BLOCKING    0
+
+#define OS_EVENT_CYCLIC_5MS     1
+#define OS_EVENT_CYCLIC_10MS    2
+#define OS_EVENT_CYCLIC_20MS    4
+#define OS_EVENT_CYCLIC_40MS    8
 /* USER CODE END PD */
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
@@ -125,12 +128,35 @@ void MX_FREERTOS_Init(void) {
 /* USER CODE END Header_regular_task_main */
 void regular_task_main(void *argument)
 {
+    uint32_t regular_event;
     /* USER CODE BEGIN regular_task_main */
     osTimerStart(cyclic_timerHandle, OS_CYCLIC_TIMER_TICK);
     /* Infinite loop */
     for (;;)
     {
-        osDelay(1);
+        regular_event = osEventFlagsWait(regular_eventHandle,
+                                         OS_EVENT_CYCLIC_5MS |
+                                         OS_EVENT_CYCLIC_10MS |
+                                         OS_EVENT_CYCLIC_20MS |
+                                         OS_EVENT_CYCLIC_40MS,
+                                         pdTRUE,
+                                         OS_TASK_BLOCKING);
+        if (regular_event & OS_EVENT_CYCLIC_5MS)
+        {
+
+        }
+        if (regular_event & OS_EVENT_CYCLIC_10MS)
+        {
+
+        }
+        if (regular_event & OS_EVENT_CYCLIC_20MS)
+        {
+
+        }
+        if (regular_event & OS_EVENT_CYCLIC_40MS)
+        {
+
+        }
     }
     /* USER CODE END regular_task_main */
 }
