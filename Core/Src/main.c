@@ -26,6 +26,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "err_code.h"
+#include "hw_intf.h"
 #include "imu_public.h"
 #include "imu_madgwick.h"
 #include "bldc_motor.h"
@@ -54,7 +55,9 @@ bldc_motor_handle_t motor_back_right = NULL;
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
-
+err_code_t SystemIMU_Config(void);
+err_code_t SystemIMUFilter_Config(void);
+err_code_t SystemMotor_Config(void);
 /* USER CODE END PFP */
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
@@ -86,7 +89,7 @@ int main(void)
     MX_TIM1_Init();
     MX_SPI1_Init();
     /* USER CODE BEGIN 2 */
-
+    SystemIMU_Config();
     /* USER CODE END 2 */
     /* Infinite loop */
     /* USER CODE BEGIN WHILE */
@@ -138,7 +141,60 @@ void SystemClock_Config(void)
     }
 }
 /* USER CODE BEGIN 4 */
+err_code_t SystemIMU_Config(void)
+{
+    imu_handle = imu_init();
 
+    imu_cfg_t imu_cfg = {
+        .mpu_type = MPU_TYPE_MPU6500 | MPU_TYPE_AK8963,
+        .accel_bias_x = 0,
+        .accel_bias_y = 0,
+        .accel_bias_z = 0,
+        .gyro_bias_x = 0,
+        .gyro_bias_y = 0,
+        .gyro_bias_z = 0,
+        .mag_hard_iron_bias_x = 0,
+        .mag_hard_iron_bias_y = 0,
+        .mag_hard_iron_bias_z = 0,
+        .mag_soft_iron_bias_x = 0,
+        .mag_soft_iron_bias_y = 0,
+        .mag_soft_iron_bias_z = 0
+    };
+    imu_set_config(imu_handle, imu_cfg);
+
+    mpu6500_cfg_t mpu6500_cfg = {
+        .clksel = MPU6500_CLKSEL_AUTO,
+        .dlpf_cfg = MPU6500_41ACEL_42GYRO_BW_HZ,
+        .sleep_mode = MPU6500_DISABLE_SLEEP_MODE,
+        .gfs_sel = MPU6500_GFS_SEL_2000,
+        .afs_sel = MPU6500_AFS_SEL_8G,
+        .read_bytes = hw_intf_mpu6500_read_bytes,
+        .write_bytes = hw_intf_mpu6500_write_bytes
+    };
+    imu_config_mpu6500(imu_handle, mpu6500_cfg);
+
+    ak8963_cfg_t ak8963_cfg = {
+        .opr_mode = AK8963_MODE_CONT_MEASUREMENT_2,
+        .mfs_sel = AK8963_MFS_16BIT,
+        .read_bytes = hw_intf_ak8963_read_bytes,
+        .write_bytes = hw_intf_ak8963_write_bytes
+    };
+    imu_config_ak8963(imu_handle, ak8963_cfg);
+
+    imu_config(imu_handle);
+
+    return ERR_CODE_SUCCESS;
+}
+
+err_code_t SystemIMUFilter_Config(void)
+{
+    return ERR_CODE_SUCCESS;
+}
+
+err_code_t SystemMotor_Config(void)
+{
+    return ERR_CODE_SUCCESS;
+}
 /* USER CODE END 4 */
 /**
   * @brief  This function is executed in case of error occurrence.
