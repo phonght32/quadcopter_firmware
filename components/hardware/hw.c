@@ -49,8 +49,8 @@ err_code_t hw_intf_ak8963_write_bytes(uint8_t reg_addr, uint8_t *buf, uint16_t l
 
 err_code_t hw_intf_motorfl_set_pwm(float duty)
 {
-	float cnt = duty * (float)HW_MOTORFL_TIM->ARR;
-	HW_MOTORFL_TIM->HW_MOTORFL_TIM_CCR = (uint32_t)cnt;
+	float timer_compare_value = duty /100 * (float)HW_MOTORFL_TIM->ARR;
+	__HAL_TIM_SET_COMPARE(&HW_MOTORFL_TIM_HANDLE, HW_MOTORFL_TIM_CHANNEL, (uint32_t)timer_compare_value);
 
 	return ERR_CODE_SUCCESS;
 }
@@ -71,8 +71,8 @@ err_code_t hw_intf_motorfl_stop(void)
 
 err_code_t hw_intf_motorfr_set_pwm(float duty)
 {
-	float cnt = duty * (float)HW_MOTORFR_TIM->ARR;
-	HW_MOTORFR_TIM->HW_MOTORFR_TIM_CCR = (uint32_t)cnt;
+	float timer_compare_value = duty /100 * (float)HW_MOTORFR_TIM->ARR;
+	__HAL_TIM_SET_COMPARE(&HW_MOTORFR_TIM_HANDLE, HW_MOTORFR_TIM_CHANNEL, (uint32_t)timer_compare_value);
 
 	return ERR_CODE_SUCCESS;
 }
@@ -93,8 +93,8 @@ err_code_t hw_intf_motorfr_stop(void)
 
 err_code_t hw_intf_motorbl_set_pwm(float duty)
 {
-	float cnt = duty * (float)HW_MOTORBL_TIM->ARR;
-	HW_MOTORBL_TIM->HW_MOTORBL_TIM_CCR = (uint32_t)cnt;
+	float timer_compare_value = duty /100 * (float)HW_MOTORBL_TIM->ARR;
+	__HAL_TIM_SET_COMPARE(&HW_MOTORBL_TIM_HANDLE, HW_MOTORBL_TIM_CHANNEL, (uint32_t)timer_compare_value);
 
 	return ERR_CODE_SUCCESS;
 }
@@ -115,8 +115,8 @@ err_code_t hw_intf_motorbl_stop(void)
 
 err_code_t hw_intf_motorbr_set_pwm(float duty)
 {
-	float cnt = duty * (float)HW_MOTORBR_TIM->ARR;
-	HW_MOTORBR_TIM->HW_MOTORBR_TIM_CCR = (uint32_t)cnt;
+	float timer_compare_value = duty /100 * (float)HW_MOTORBR_TIM->ARR;
+	__HAL_TIM_SET_COMPARE(&HW_MOTORBR_TIM_HANDLE, HW_MOTORBR_TIM_CHANNEL, (uint32_t)timer_compare_value);
 
 	return ERR_CODE_SUCCESS;
 }
