@@ -38,11 +38,11 @@
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
 /* USER CODE END Variables */
-/* Definitions for defaultTask */
-osThreadId_t defaultTaskHandle;
-const osThreadAttr_t defaultTask_attributes = {
-    .name = "defaultTask",
-    .stack_size = 128 * 4,
+/* Definitions for regular_task */
+osThreadId_t regular_taskHandle;
+const osThreadAttr_t regular_task_attributes = {
+    .name = "regular_task",
+    .stack_size = 256 * 4,
     .priority = (osPriority_t) osPriorityNormal,
 };
 /* Definitions for critical_task */
@@ -52,19 +52,16 @@ const osThreadAttr_t critical_task_attributes = {
     .stack_size = 256 * 4,
     .priority = (osPriority_t) osPriorityHigh,
 };
-/* Definitions for regular_task */
-osThreadId_t regular_taskHandle;
-const osThreadAttr_t regular_task_attributes = {
-    .name = "regular_task",
-    .stack_size = 256 * 4,
-    .priority = (osPriority_t) osPriorityNormal,
+/* Definitions for OS_EVENT */
+osEventFlagsId_t OS_EVENTHandle;
+const osEventFlagsAttr_t OS_EVENT_attributes = {
+    .name = "OS_EVENT"
 };
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
 /* USER CODE END FunctionPrototypes */
-void StartDefaultTask(void *argument);
+void regularTask(void *argument);
 extern void critical_task_main(void *argument);
-extern void regular_task_main(void *argument);
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 /**
   * @brief  FreeRTOS initialization
@@ -87,35 +84,33 @@ void MX_FREERTOS_Init(void) {
     /* add queues, ... */
     /* USER CODE END RTOS_QUEUES */
     /* Create the thread(s) */
-    /* creation of defaultTask */
-    defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
+    /* creation of regular_task */
+    regular_taskHandle = osThreadNew(regularTask, NULL, &regular_task_attributes);
     /* creation of critical_task */
     critical_taskHandle = osThreadNew(critical_task_main, NULL, &critical_task_attributes);
-    /* creation of regular_task */
-    regular_taskHandle = osThreadNew(regular_task_main, NULL, &regular_task_attributes);
     /* USER CODE BEGIN RTOS_THREADS */
     /* add threads, ... */
     /* USER CODE END RTOS_THREADS */
+    /* Create the event(s) */
+    /* creation of OS_EVENT */
+    OS_EVENTHandle = osEventFlagsNew(&OS_EVENT_attributes);
     /* USER CODE BEGIN RTOS_EVENTS */
     /* add events, ... */
     /* USER CODE END RTOS_EVENTS */
 }
-/* USER CODE BEGIN Header_StartDefaultTask */
+/* USER CODE BEGIN Header_regularTask */
 /**
-  * @brief  Function implementing the defaultTask thread.
+  * @brief  Function implementing the regular_task thread.
   * @param  argument: Not used
   * @retval None
   */
-/* USER CODE END Header_StartDefaultTask */
-void StartDefaultTask(void *argument)
+/* USER CODE END Header_regularTask */
+void regularTask(void *argument)
 {
-    /* USER CODE BEGIN StartDefaultTask */
+    /* USER CODE BEGIN regularTask */
     /* Infinite loop */
-    for(;;)
-    {
-        osDelay(1);
-    }
-    /* USER CODE END StartDefaultTask */
+    regular_task_main(argument);
+    /* USER CODE END regularTask */
 }
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
