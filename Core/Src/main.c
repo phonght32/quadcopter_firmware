@@ -28,8 +28,7 @@
 /* USER CODE BEGIN Includes */
 #include "err_code.h"
 #include "periph_imu.h"
-#include "hw_intf.h"
-#include "bldc_motor.h"
+#include "periph_motor.h"
 /* USER CODE END Includes */
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
@@ -45,17 +44,11 @@
 /* USER CODE END PM */
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
-bldc_motor_handle_t motorfl_handle = NULL;
-bldc_motor_handle_t motorfr_handle = NULL;
-bldc_motor_handle_t motorbl_handle = NULL;
-bldc_motor_handle_t motorbr_handle = NULL;
 /* USER CODE END PV */
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 void MX_FREERTOS_Init(void);
 /* USER CODE BEGIN PFP */
-err_code_t SystemIMUFilter_Config(void);
-err_code_t SystemMotor_Config(void);
 /* USER CODE END PFP */
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
@@ -88,7 +81,7 @@ int main(void)
     MX_SPI1_Init();
     /* USER CODE BEGIN 2 */
     periph_imu_init();
-    SystemMotor_Config();
+    periph_motor_init();
     /* USER CODE END 2 */
     /* Init scheduler */
     osKernelInitialize();  /* Call init function for freertos objects (in freertos.c) */
@@ -146,51 +139,6 @@ void SystemClock_Config(void)
     }
 }
 /* USER CODE BEGIN 4 */
-
-err_code_t SystemMotor_Config(void)
-{
-    motorfl_handle = bldc_motor_init();
-    bldc_motor_cfg_t motorfl_cfg = {
-        .kv = 3800,
-        .set_pwm = hw_intf_motorfl_set_pwm,
-        .start = hw_intf_motorfl_start,
-        .stop = hw_intf_motorfl_stop
-    };
-    bldc_motor_set_config(motorfl_handle, motorfl_cfg);
-    bldc_motor_config(motorfl_handle);
-
-    motorfr_handle = bldc_motor_init();
-    bldc_motor_cfg_t motorfr_cfg = {
-        .kv = 3800,
-        .set_pwm = hw_intf_motorfr_set_pwm,
-        .start = hw_intf_motorfr_start,
-        .stop = hw_intf_motorfr_stop
-    };
-    bldc_motor_set_config(motorfr_handle, motorfr_cfg);
-    bldc_motor_config(motorfr_handle);
-
-    motorbl_handle = bldc_motor_init();
-    bldc_motor_cfg_t motorbl_cfg = {
-        .kv = 3800,
-        .set_pwm = hw_intf_motorbl_set_pwm,
-        .start = hw_intf_motorbl_start,
-        .stop = hw_intf_motorbl_stop
-    };
-    bldc_motor_set_config(motorbl_handle, motorbl_cfg);
-    bldc_motor_config(motorbl_handle);
-
-    motorbr_handle = bldc_motor_init();
-    bldc_motor_cfg_t motorbr_cfg = {
-        .kv = 3800,
-        .set_pwm = hw_intf_motorbr_set_pwm,
-        .start = hw_intf_motorbr_start,
-        .stop = hw_intf_motorbr_stop
-    };
-    bldc_motor_set_config(motorbr_handle, motorbr_cfg);
-    bldc_motor_config(motorbr_handle);
-
-    return ERR_CODE_SUCCESS;
-}
 /* USER CODE END 4 */
 /**
   * @brief  This function is executed in case of error occurrence.
