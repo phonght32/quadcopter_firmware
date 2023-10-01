@@ -56,24 +56,24 @@ err_code_t hw_intf_mpu6500_write_bytes(uint8_t reg_addr, uint8_t *buf, uint16_t 
 err_code_t hw_intf_ak8963_read_bytes(uint8_t reg_addr, uint8_t *buf, uint16_t len, uint32_t timeout_ms)
 {
 	uint8_t byte_data = 0;
-	
+
 	/* Set slave 0 to the AK8963 and set for read */
 	byte_data = MPU6500_I2C_SLV0_ADDR | 0x80;
-	HAL_SPI_Transmit(&HW_MPU6500_SPI_HANDLE, &byte_data, 1, timeout_ms);
+	HAL_SPI_Transmit(&HW_AK8963_SPI_HANDLE, &byte_data, 1, timeout_ms);
 	byte_data = AK8963_ADDR;
-	HAL_SPI_Transmit(&HW_MPU6500_SPI_HANDLE, &byte_data, 1, timeout_ms);
+	HAL_SPI_Transmit(&HW_AK8963_SPI_HANDLE, &byte_data, 1, timeout_ms);
 
 	// set the register to the desired AK8963 sub address
 	byte_data = MPU6500_I2C_SLV0_REG;
-	HAL_SPI_Transmit(&HW_MPU6500_SPI_HANDLE, &byte_data, 1, timeout_ms);
+	HAL_SPI_Transmit(&HW_AK8963_SPI_HANDLE, &byte_data, 1, timeout_ms);
 	byte_data = reg_addr;
-	HAL_SPI_Transmit(&HW_MPU6500_SPI_HANDLE, &byte_data, 1, timeout_ms);
+	HAL_SPI_Transmit(&HW_AK8963_SPI_HANDLE, &byte_data, 1, timeout_ms);
 
 	// enable I2C and request the bytes
 	byte_data = MPU6500_I2C_SLV0_CTRL;
-	HAL_SPI_Transmit(&HW_MPU6500_SPI_HANDLE, &byte_data, 1, timeout_ms);
+	HAL_SPI_Transmit(&HW_AK8963_SPI_HANDLE, &byte_data, 1, timeout_ms);
 	byte_data = reg_addr;
-	HAL_SPI_Transmit(&HW_MPU6500_SPI_HANDLE, &byte_data, 1, timeout_ms);
+	HAL_SPI_Transmit(&HW_AK8963_SPI_HANDLE, &byte_data, 1, timeout_ms);
 
 	/* Takes some time for these registers to fill */
 
@@ -81,8 +81,8 @@ err_code_t hw_intf_ak8963_read_bytes(uint8_t reg_addr, uint8_t *buf, uint16_t le
 	uint8_t buf_data[1];
 	buf_data[0] = MPU6500_EXT_SENS_DATA_00 | 0x80;
 
-	HAL_SPI_Transmit(&HW_MPU6500_SPI_HANDLE, buf_data, 1, timeout_ms);
-	HAL_SPI_Receive(&HW_MPU6500_SPI_HANDLE, buf, len, timeout_ms);
+	HAL_SPI_Transmit(&HW_AK8963_SPI_HANDLE, buf_data, 1, timeout_ms);
+	HAL_SPI_Receive(&HW_AK8963_SPI_HANDLE, buf, len, timeout_ms);
 
 	return ERR_CODE_SUCCESS;
 }
@@ -93,28 +93,28 @@ err_code_t hw_intf_ak8963_write_bytes(uint8_t reg_addr, uint8_t *buf, uint16_t l
 
 	/* Set slave 0 to the AK8963 and set for write */
 	byte_data = MPU6500_I2C_SLV0_ADDR;
-	HAL_SPI_Transmit(&HW_MPU6500_SPI_HANDLE, &byte_data, 1, timeout_ms);
+	HAL_SPI_Transmit(&HW_AK8963_SPI_HANDLE, &byte_data, 1, timeout_ms);
 	byte_data = AK8963_ADDR;
-	HAL_SPI_Transmit(&HW_MPU6500_SPI_HANDLE, &byte_data, 1, timeout_ms);
-	
+	HAL_SPI_Transmit(&HW_AK8963_SPI_HANDLE, &byte_data, 1, timeout_ms);
+
 	/* Set the register to the desired AK8963 sub address */
 	byte_data = MPU6500_I2C_SLV0_REG;
-	HAL_SPI_Transmit(&HW_MPU6500_SPI_HANDLE, &byte_data, 1, timeout_ms);
+	HAL_SPI_Transmit(&HW_AK8963_SPI_HANDLE, &byte_data, 1, timeout_ms);
 	byte_data = reg_addr;
-	HAL_SPI_Transmit(&HW_MPU6500_SPI_HANDLE, &byte_data, 1, timeout_ms);
+	HAL_SPI_Transmit(&HW_AK8963_SPI_HANDLE, &byte_data, 1, timeout_ms);
 
 	/* Store the data for write */
 	uint8_t buf_data[len + 1];
 	buf_data[0] = MPU6500_I2C_SLV0_DO;
 	memcpy(&buf_data[1], buf, len);
-	HAL_SPI_Transmit(&HW_MPU6500_SPI_HANDLE, buf_data, 1, timeout_ms);
-	HAL_SPI_Transmit(&HW_MPU6500_SPI_HANDLE, &buf_data[1], len, timeout_ms);
+	HAL_SPI_Transmit(&HW_AK8963_SPI_HANDLE, buf_data, 1, timeout_ms);
+	HAL_SPI_Transmit(&HW_AK8963_SPI_HANDLE, &buf_data[1], len, timeout_ms);
 
 	/* Enable I2C and send 1 byte */
 	byte_data = MPU6500_I2C_SLV0_CTRL;
-	HAL_SPI_Transmit(&HW_MPU6500_SPI_HANDLE, &byte_data, 1, timeout_ms);
+	HAL_SPI_Transmit(&HW_AK8963_SPI_HANDLE, &byte_data, 1, timeout_ms);
 	byte_data = 0x80 | 1;
-	HAL_SPI_Transmit(&HW_MPU6500_SPI_HANDLE, &byte_data, 1, timeout_ms);
+	HAL_SPI_Transmit(&HW_AK8963_SPI_HANDLE, &byte_data, 1, timeout_ms);
 
 	return ERR_CODE_SUCCESS;
 }
