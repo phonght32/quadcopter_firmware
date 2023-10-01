@@ -31,15 +31,13 @@ typedef StaticEventGroup_t osStaticEventGroupDef_t;
 /* USER CODE END PTD */
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define OS_CYCLIC_TIMER_TICK    5
+#define OS_CYCLIC_TIMER_TICK    1
 
 #define OS_TASK_BLOCKING        portMAX_DELAY
 #define OS_TASK_NON_BLOCKING    0
 
-#define OS_EVENT_CYCLIC_5MS     1
-#define OS_EVENT_CYCLIC_10MS    2
-#define OS_EVENT_CYCLIC_20MS    4
-#define OS_EVENT_CYCLIC_40MS    8
+#define OS_EVENT_CYCLIC_1MS     1
+#define OS_EVENT_CYCLIC_5MS     2
 /* USER CODE END PD */
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
@@ -125,25 +123,14 @@ void regular_task_main(void *argument)
     for (;;)
     {
         regular_event = osEventFlagsWait(regular_eventHandle,
-                                         OS_EVENT_CYCLIC_5MS |
-                                         OS_EVENT_CYCLIC_10MS |
-                                         OS_EVENT_CYCLIC_20MS |
-                                         OS_EVENT_CYCLIC_40MS,
+                                         OS_EVENT_CYCLIC_1MS | OS_EVENT_CYCLIC_5MS,
                                          pdTRUE,
                                          OS_TASK_BLOCKING);
+        if (regular_event & OS_EVENT_CYCLIC_1MS)
+        {
+
+        }
         if (regular_event & OS_EVENT_CYCLIC_5MS)
-        {
-
-        }
-        if (regular_event & OS_EVENT_CYCLIC_10MS)
-        {
-
-        }
-        if (regular_event & OS_EVENT_CYCLIC_20MS)
-        {
-
-        }
-        if (regular_event & OS_EVENT_CYCLIC_40MS)
         {
 
         }
@@ -156,23 +143,11 @@ void cyclic_timer_callback(void *argument)
     /* USER CODE BEGIN cyclic_timer_callback */
     static uint16_t cnt_cycle;
 
-    osEventFlagsSet(regular_eventHandle, OS_EVENT_CYCLIC_5MS);
+    osEventFlagsSet(regular_eventHandle, OS_EVENT_CYCLIC_1MS);
 
-    if (cnt_cycle == 1)
+    if (cnt_cycle == 4)
     {
-        osEventFlagsSet(regular_eventHandle, OS_EVENT_CYCLIC_10MS);
-    }
-    else if (cnt_cycle == 3)
-    {
-        osEventFlagsSet(regular_eventHandle, OS_EVENT_CYCLIC_10MS | OS_EVENT_CYCLIC_20MS);
-    }
-    else if (cnt_cycle == 5)
-    {
-        osEventFlagsSet(regular_eventHandle, OS_EVENT_CYCLIC_10MS);
-    }
-    else if (cnt_cycle == 7)
-    {
-        osEventFlagsSet(regular_eventHandle, OS_EVENT_CYCLIC_10MS | OS_EVENT_CYCLIC_20MS | OS_EVENT_CYCLIC_40MS);
+        osEventFlagsSet(regular_eventHandle, OS_EVENT_CYCLIC_5MS);
     }
     else
     {
