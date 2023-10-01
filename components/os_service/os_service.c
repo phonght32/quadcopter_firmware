@@ -22,4 +22,8 @@ void critical_task_main(void *argument)
 	vTaskDelete(NULL);
 }
 
+void cyclic_timer_callback(void *argument)
+{
+	
+}
 

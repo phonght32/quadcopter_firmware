@@ -25,6 +25,15 @@ void regular_task_main(void *argument);
  */
 void critical_task_main(void *argument);
 
+/*
+ * @brief   Cyclic timer callback.
+ *
+ * @param   argument Pointer argument.
+ *
+ * @return 	None.
+ */
+void cyclic_timer_callback(void *argument);
+
 #ifdef __cplusplus
 }
 #endif

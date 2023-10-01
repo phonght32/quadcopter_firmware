@@ -52,6 +52,11 @@ const osThreadAttr_t critical_task_attributes = {
     .stack_size = 256 * 4,
     .priority = (osPriority_t) osPriorityHigh,
 };
+/* Definitions for cyclic_timer */
+osTimerId_t cyclic_timerHandle;
+const osTimerAttr_t cyclic_timer_attributes = {
+    .name = "cyclic_timer"
+};
 /* Definitions for OS_EVENT */
 osEventFlagsId_t OS_EVENTHandle;
 const osEventFlagsAttr_t OS_EVENT_attributes = {
@@ -62,6 +67,7 @@ const osEventFlagsAttr_t OS_EVENT_attributes = {
 /* USER CODE END FunctionPrototypes */
 void regularTask(void *argument);
 extern void critical_task_main(void *argument);
+extern void cyclic_timer_callback(void *argument);
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 /**
   * @brief  FreeRTOS initialization
@@ -77,6 +83,9 @@ void MX_FREERTOS_Init(void) {
     /* USER CODE BEGIN RTOS_SEMAPHORES */
     /* add semaphores, ... */
     /* USER CODE END RTOS_SEMAPHORES */
+    /* Create the timer(s) */
+    /* creation of cyclic_timer */
+    cyclic_timerHandle = osTimerNew(cyclic_timer_callback, osTimerPeriodic, NULL, &cyclic_timer_attributes);
     /* USER CODE BEGIN RTOS_TIMERS */
     /* start timers, add new ones, ... */
     /* USER CODE END RTOS_TIMERS */
