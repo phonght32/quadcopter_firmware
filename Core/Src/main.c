@@ -80,6 +80,7 @@ int main(void)
     /* USER CODE END Init */
     /* Configure the system clock */
     SystemClock_Config();
+    SystemIMUFilter_Config();
     /* USER CODE BEGIN SysInit */
 
     /* USER CODE END SysInit */
@@ -188,6 +189,16 @@ err_code_t SystemIMU_Config(void)
 
 err_code_t SystemIMUFilter_Config(void)
 {
+    imu_madgwick_handle = imu_madgwick_init();
+
+    imu_madgwick_cfg_t imu_madgwick_cfg = {
+        .beta = 0.1f,
+        .sample_freq = 50.0f
+    };
+    imu_madgwick_set_config(imu_madgwick_handle, imu_madgwick_cfg);
+
+    imu_madgwick_config(imu_madgwick_handle);
+
     return ERR_CODE_SUCCESS;
 }
 
