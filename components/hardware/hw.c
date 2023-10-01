@@ -31,17 +31,62 @@ err_code_t hw_intf_ak8963_write_bytes(uint8_t reg_addr, uint8_t *buf, uint16_t l
 	return ERR_CODE_SUCCESS;
 }
 
-err_code_t hw_init_imu(void)
+err_code_t hw_intf_motorfl_set_pwm(float duty)
 {
 	return ERR_CODE_SUCCESS;
 }
 
-err_code_t hw_init_imu_filter(void)
+err_code_t hw_intf_motorfl_start(void)
 {
 	return ERR_CODE_SUCCESS;
 }
 
-err_code_t hw_init_bldc_motor(void)
+err_code_t hw_intf_motorfl_stop(void)
+{
+	return ERR_CODE_SUCCESS;
+}
+
+err_code_t hw_intf_motorfr_set_pwm(float duty)
+{
+	return ERR_CODE_SUCCESS;
+}
+
+err_code_t hw_intf_motorfr_start(void)
+{
+	return ERR_CODE_SUCCESS;
+}
+
+err_code_t hw_intf_motorfr_stop(void)
+{
+	return ERR_CODE_SUCCESS;
+}
+
+err_code_t hw_intf_motorbl_set_pwm(float duty)
+{
+	return ERR_CODE_SUCCESS;
+}
+
+err_code_t hw_intf_motorbl_start(void)
+{
+	return ERR_CODE_SUCCESS;
+}
+
+err_code_t hw_intf_motorbl_stop(void)
+{
+	return ERR_CODE_SUCCESS;
+}
+
+err_code_t hw_intf_motorbr_set_pwm(float duty)
+{
+	return ERR_CODE_SUCCESS;
+}
+
+err_code_t hw_intf_motorbr_start(void)
+{
+	return ERR_CODE_SUCCESS;
+}
+
+err_code_t hw_intf_motorbr_stop(void)
 {
 	return ERR_CODE_SUCCESS;
 }

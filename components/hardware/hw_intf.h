@@ -63,6 +63,138 @@ err_code_t hw_intf_mpu6500_read_bytes(uint8_t reg_addr, uint8_t *buf, uint16_t l
  */
 err_code_t hw_intf_mpu6500_write_bytes(uint8_t reg_addr, uint8_t *buf, uint16_t len, uint32_t timeout_ms);
 
+/*
+ * @brief   Set PWM for BLDC motor front left.
+ *
+ * @param   duty Duty cycle.
+ *
+ * @return
+ *      - Handle structure: Success.
+ *      - Others:           Fail.
+ */
+err_code_t hw_intf_motorfl_set_pwm(float duty);
+
+/*
+ * @brief   Start BLDC motor front left.
+ *
+ * @param   None.
+ *
+ * @return
+ *      - Handle structure: Success.
+ *      - Others:           Fail.
+ */
+err_code_t hw_intf_motorfl_start(void);
+
+/*
+ * @brief   Stop BLDC motor front left.
+ *
+ * @param   None.
+ *
+ * @return
+ *      - Handle structure: Success.
+ *      - Others:           Fail.
+ */
+err_code_t hw_intf_motorfl_stop(void);
+
+/*
+ * @brief   Set PWM for BLDC motor front right.
+ *
+ * @param   duty Duty cycle.
+ *
+ * @return
+ *      - Handle structure: Success.
+ *      - Others:           Fail.
+ */
+err_code_t hw_intf_motorfr_set_pwm(float duty);
+
+/*
+ * @brief   Start BLDC motor front right.
+ *
+ * @param   None.
+ *
+ * @return
+ *      - Handle structure: Success.
+ *      - Others:           Fail.
+ */
+err_code_t hw_intf_motorfr_start(void);
+
+/*
+ * @brief   Stop BLDC motor front right.
+ *
+ * @param   None.
+ *
+ * @return
+ *      - Handle structure: Success.
+ *      - Others:           Fail.
+ */
+err_code_t hw_intf_motorfr_stop(void);
+
+/*
+ * @brief   Set PWM for BLDC motor back left.
+ *
+ * @param   duty Duty cycle.
+ *
+ * @return
+ *      - Handle structure: Success.
+ *      - Others:           Fail.
+ */
+err_code_t hw_intf_motorbl_set_pwm(float duty);
+
+/*
+ * @brief   Start BLDC motor back left.
+ *
+ * @param   None.
+ *
+ * @return
+ *      - Handle structure: Success.
+ *      - Others:           Fail.
+ */
+err_code_t hw_intf_motorbl_start(void);
+
+/*
+ * @brief   Stop BLDC motor back left.
+ *
+ * @param   None.
+ *
+ * @return
+ *      - Handle structure: Success.
+ *      - Others:           Fail.
+ */
+err_code_t hw_intf_motorbl_stop(void);
+
+/*
+ * @brief   Set PWM for BLDC motor back right.
+ *
+ * @param   duty Duty cycle.
+ *
+ * @return
+ *      - Handle structure: Success.
+ *      - Others:           Fail.
+ */
+err_code_t hw_intf_motorbr_set_pwm(float duty);
+
+/*
+ * @brief   Start BLDC motor back right.
+ *
+ * @param   None.
+ *
+ * @return
+ *      - Handle structure: Success.
+ *      - Others:           Fail.
+ */
+err_code_t hw_intf_motorbr_start(void);
+
+/*
+ * @brief   Stop BLDC motor back right.
+ *
+ * @param   None.
+ *
+ * @return
+ *      - Handle structure: Success.
+ *      - Others:           Fail.
+ */
+err_code_t hw_intf_motorbr_stop(void);
+
 #ifdef __cplusplus
 }
 #endif
