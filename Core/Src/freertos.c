@@ -54,13 +54,6 @@ const osThreadAttr_t regular_task_attributes = {
     .stack_size = 256 * 4,
     .priority = (osPriority_t) osPriorityNormal,
 };
-/* Definitions for critical_task */
-osThreadId_t critical_taskHandle;
-const osThreadAttr_t critical_task_attributes = {
-    .name = "critical_task",
-    .stack_size = 256 * 4,
-    .priority = (osPriority_t) osPriorityHigh,
-};
 /* Definitions for cyclic_timer */
 osTimerId_t cyclic_timerHandle;
 const osTimerAttr_t cyclic_timer_attributes = {
@@ -78,7 +71,6 @@ const osEventFlagsAttr_t regular_event_attributes = {
 /* USER CODE BEGIN FunctionPrototypes */
 /* USER CODE END FunctionPrototypes */
 void regular_task_main(void *argument);
-void critical_task_main(void *argument);
 void cyclic_timer_callback(void *argument);
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 /**
@@ -107,8 +99,6 @@ void MX_FREERTOS_Init(void) {
     /* Create the thread(s) */
     /* creation of regular_task */
     regular_taskHandle = osThreadNew(regular_task_main, NULL, &regular_task_attributes);
-    /* creation of critical_task */
-    critical_taskHandle = osThreadNew(critical_task_main, NULL, &critical_task_attributes);
     /* USER CODE BEGIN RTOS_THREADS */
     /* add threads, ... */
     /* USER CODE END RTOS_THREADS */
@@ -128,8 +118,8 @@ void MX_FREERTOS_Init(void) {
 /* USER CODE END Header_regular_task_main */
 void regular_task_main(void *argument)
 {
-    uint32_t regular_event;
     /* USER CODE BEGIN regular_task_main */
+    uint32_t regular_event;
     osTimerStart(cyclic_timerHandle, OS_CYCLIC_TIMER_TICK);
     /* Infinite loop */
     for (;;)
@@ -159,23 +149,6 @@ void regular_task_main(void *argument)
         }
     }
     /* USER CODE END regular_task_main */
-}
-/* USER CODE BEGIN Header_critical_task_main */
-/**
-* @brief Function implementing the critical_task thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_critical_task_main */
-void critical_task_main(void *argument)
-{
-    /* USER CODE BEGIN critical_task_main */
-    /* Infinite loop */
-    for (;;)
-    {
-        osDelay(1);
-    }
-    /* USER CODE END critical_task_main */
 }
 /* cyclic_timer_callback function */
 void cyclic_timer_callback(void *argument)
