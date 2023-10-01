@@ -31,6 +31,12 @@ typedef StaticEventGroup_t osStaticEventGroupDef_t;
 /* USER CODE END PTD */
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define OS_CYCLIC_TIMER_TICK    5
+
+#define OS_EVENT_CYCLIC_5MS 	1
+#define OS_EVENT_CYCLIC_10MS 	2
+#define OS_EVENT_CYCLIC_20MS 	4
+#define OS_EVENT_CYCLIC_40MS 	8
 /* USER CODE END PD */
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
@@ -120,8 +126,9 @@ void MX_FREERTOS_Init(void) {
 void regular_task_main(void *argument)
 {
     /* USER CODE BEGIN regular_task_main */
+    osTimerStart(cyclic_timerHandle, OS_CYCLIC_TIMER_TICK);
     /* Infinite loop */
-    for(;;)
+    for (;;)
     {
         osDelay(1);
     }
@@ -138,7 +145,7 @@ void critical_task_main(void *argument)
 {
     /* USER CODE BEGIN critical_task_main */
     /* Infinite loop */
-    for(;;)
+    for (;;)
     {
         osDelay(1);
     }
@@ -148,6 +155,37 @@ void critical_task_main(void *argument)
 void cyclic_timer_callback(void *argument)
 {
     /* USER CODE BEGIN cyclic_timer_callback */
+    static uint16_t cnt_cycle;
+
+    osEventFlagsSet(regular_eventHandle, OS_EVENT_CYCLIC_5MS);
+
+    if (cnt_cycle == 1)
+    {
+        osEventFlagsSet(regular_eventHandle, OS_EVENT_CYCLIC_10MS);
+    }
+    else if (cnt_cycle == 3)
+    {
+        osEventFlagsSet(regular_eventHandle, OS_EVENT_CYCLIC_10MS | OS_EVENT_CYCLIC_20MS);
+    }
+    else if (cnt_cycle == 5)
+    {
+        osEventFlagsSet(regular_eventHandle, OS_EVENT_CYCLIC_10MS);
+    }
+    else if (cnt_cycle == 7)
+    {
+        osEventFlagsSet(regular_eventHandle, OS_EVENT_CYCLIC_10MS | OS_EVENT_CYCLIC_20MS | OS_EVENT_CYCLIC_40MS);
+    }
+    else
+    {
+
+    }
+
+    cnt_cycle++;
+    if (cnt_cycle == 8)
+    {
+        cnt_cycle = 0;
+    }
+
     /* USER CODE END cyclic_timer_callback */
 }
 /* Private application code --------------------------------------------------*/
