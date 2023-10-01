@@ -24,9 +24,9 @@
 #include "cmsis_os.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "os_service.h"
 /* USER CODE END Includes */
 /* Private typedef -----------------------------------------------------------*/
+typedef StaticEventGroup_t osStaticEventGroupDef_t;
 /* USER CODE BEGIN PTD */
 /* USER CODE END PTD */
 /* Private define ------------------------------------------------------------*/
@@ -57,17 +57,20 @@ osTimerId_t cyclic_timerHandle;
 const osTimerAttr_t cyclic_timer_attributes = {
     .name = "cyclic_timer"
 };
-/* Definitions for OS_EVENT */
-osEventFlagsId_t OS_EVENTHandle;
-const osEventFlagsAttr_t OS_EVENT_attributes = {
-    .name = "OS_EVENT"
+/* Definitions for regular_event */
+osEventFlagsId_t regular_eventHandle;
+osStaticEventGroupDef_t regular_event_ctrl;
+const osEventFlagsAttr_t regular_event_attributes = {
+    .name = "regular_event",
+    .cb_mem = &regular_event_ctrl,
+    .cb_size = sizeof(regular_event_ctrl),
 };
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
 /* USER CODE END FunctionPrototypes */
-void regularTask(void *argument);
-extern void critical_task_main(void *argument);
-extern void cyclic_timer_callback(void *argument);
+void regular_task_main(void *argument);
+void critical_task_main(void *argument);
+void cyclic_timer_callback(void *argument);
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 /**
   * @brief  FreeRTOS initialization
@@ -94,32 +97,58 @@ void MX_FREERTOS_Init(void) {
     /* USER CODE END RTOS_QUEUES */
     /* Create the thread(s) */
     /* creation of regular_task */
-    regular_taskHandle = osThreadNew(regularTask, NULL, &regular_task_attributes);
+    regular_taskHandle = osThreadNew(regular_task_main, NULL, &regular_task_attributes);
     /* creation of critical_task */
     critical_taskHandle = osThreadNew(critical_task_main, NULL, &critical_task_attributes);
     /* USER CODE BEGIN RTOS_THREADS */
     /* add threads, ... */
     /* USER CODE END RTOS_THREADS */
     /* Create the event(s) */
-    /* creation of OS_EVENT */
-    OS_EVENTHandle = osEventFlagsNew(&OS_EVENT_attributes);
+    /* creation of regular_event */
+    regular_eventHandle = osEventFlagsNew(&regular_event_attributes);
     /* USER CODE BEGIN RTOS_EVENTS */
     /* add events, ... */
     /* USER CODE END RTOS_EVENTS */
 }
-/* USER CODE BEGIN Header_regularTask */
+/* USER CODE BEGIN Header_regular_task_main */
 /**
   * @brief  Function implementing the regular_task thread.
   * @param  argument: Not used
   * @retval None
   */
-/* USER CODE END Header_regularTask */
-void regularTask(void *argument)
+/* USER CODE END Header_regular_task_main */
+void regular_task_main(void *argument)
 {
-    /* USER CODE BEGIN regularTask */
+    /* USER CODE BEGIN regular_task_main */
     /* Infinite loop */
-    regular_task_main(argument);
-    /* USER CODE END regularTask */
+    for(;;)
+    {
+        osDelay(1);
+    }
+    /* USER CODE END regular_task_main */
+}
+/* USER CODE BEGIN Header_critical_task_main */
+/**
+* @brief Function implementing the critical_task thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_critical_task_main */
+void critical_task_main(void *argument)
+{
+    /* USER CODE BEGIN critical_task_main */
+    /* Infinite loop */
+    for(;;)
+    {
+        osDelay(1);
+    }
+    /* USER CODE END critical_task_main */
+}
+/* cyclic_timer_callback function */
+void cyclic_timer_callback(void *argument)
+{
+    /* USER CODE BEGIN cyclic_timer_callback */
+    /* USER CODE END cyclic_timer_callback */
 }
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
