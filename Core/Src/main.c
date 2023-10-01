@@ -80,8 +80,6 @@ int main(void)
     /* USER CODE END Init */
     /* Configure the system clock */
     SystemClock_Config();
-    SystemIMUFilter_Config();
-    SystemMotor_Config();
     /* USER CODE BEGIN SysInit */
 
     /* USER CODE END SysInit */
@@ -92,6 +90,8 @@ int main(void)
     MX_SPI1_Init();
     /* USER CODE BEGIN 2 */
     SystemIMU_Config();
+    SystemIMUFilter_Config();
+    SystemMotor_Config();
     /* USER CODE END 2 */
     /* Infinite loop */
     /* USER CODE BEGIN WHILE */
