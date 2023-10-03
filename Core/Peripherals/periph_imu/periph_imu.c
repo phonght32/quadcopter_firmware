@@ -35,7 +35,8 @@ err_code_t periph_imu_init(void)
     //     .gfs_sel = MPU6500_GFS_SEL_2000,
     //     .afs_sel = MPU6500_AFS_SEL_8G,
     //     .read_bytes = hw_intf_mpu6500_read_bytes,
-    //     .write_bytes = hw_intf_mpu6500_write_bytes
+    //     .write_bytes = hw_intf_mpu6500_write_bytes,
+    //     .delay = HAL_Delay
     // };
     // imu_config_mpu6500(imu_handle, mpu6500_cfg);
 
@@ -43,7 +44,8 @@ err_code_t periph_imu_init(void)
     //     .opr_mode = AK8963_MODE_CONT_MEASUREMENT_2,
     //     .mfs_sel = AK8963_MFS_16BIT,
     //     .read_bytes = hw_intf_ak8963_read_bytes,
-    //     .write_bytes = hw_intf_ak8963_write_bytes
+    //     .write_bytes = hw_intf_ak8963_write_bytes,
+    //     .delay = HAL_Delay
     // };
     // imu_config_ak8963(imu_handle, ak8963_cfg);
 
