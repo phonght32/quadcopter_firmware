@@ -2,8 +2,10 @@
 #include "tim.h"
 #include "spi.h"
 #include "gpio.h"
+#include "i2c.h"
 #include "hw_intf.h"
 #include "mpu6500_register.h"
+#include "mpu6050_register.h"
 #include "ak8963_register.h"
 
 #define HW_MPU6500_SPI_HANDLE		hspi1
@@ -115,6 +117,31 @@ err_code_t hw_intf_ak8963_write_bytes(uint8_t reg_addr, uint8_t *buf, uint16_t l
 	HAL_SPI_Transmit(&HW_AK8963_SPI_HANDLE, &byte_data, 1, timeout_ms);
 	byte_data = 0x80 | 1;
 	HAL_SPI_Transmit(&HW_AK8963_SPI_HANDLE, &byte_data, 1, timeout_ms);
+
+	return ERR_CODE_SUCCESS;
+}
+
+err_code_t hw_intf_mpu6050_read_bytes(uint8_t reg_addr, uint8_t *buf, uint16_t len, uint32_t timeout_ms)
+{
+	uint8_t buffer[1];
+	buffer[0] = reg_addr;
+
+	HAL_I2C_Master_Transmit(&hi2c1, MPU6050_ADDR, buffer, 1, timeout_ms);
+	HAL_I2C_Master_Receive(&hi2c1, MPU6050_ADDR, buf, len, timeout_ms);
+
+	return ERR_CODE_SUCCESS;
+}
+
+err_code_t hw_intf_mpu6050_write_bytes(uint8_t reg_addr, uint8_t *buf, uint16_t len, uint32_t timeout_ms)
+{
+	uint8_t buf_send[len + 1];
+	buf_send[0] = reg_addr;
+	for (uint8_t i = 0; i < len; i++)
+	{
+		buf_send[i + 1] = buf[i];
+	}
+
+	HAL_I2C_Master_Transmit(&hi2c1, MPU6050_ADDR, buf_send, len + 1, timeout_ms);
 
 	return ERR_CODE_SUCCESS;
 }

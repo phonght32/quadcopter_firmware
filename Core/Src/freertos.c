@@ -24,6 +24,8 @@
 #include "cmsis_os.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "periph_imu.h"
+#include "math.h"
 /* USER CODE END Includes */
 /* Private typedef -----------------------------------------------------------*/
 typedef StaticEventGroup_t osStaticEventGroupDef_t;
@@ -49,7 +51,7 @@ typedef StaticEventGroup_t osStaticEventGroupDef_t;
 osThreadId_t regular_taskHandle;
 const osThreadAttr_t regular_task_attributes = {
     .name = "regular_task",
-    .stack_size = 256 * 4,
+    .stack_size = 512 * 4,
     .priority = (osPriority_t) osPriorityNormal,
 };
 /* Definitions for cyclic_timer */
@@ -114,6 +116,7 @@ void MX_FREERTOS_Init(void) {
   * @retval None
   */
 /* USER CODE END Header_regular_task_main */
+float roll, pitch, yaw;
 void regular_task_main(void *argument)
 {
     /* USER CODE BEGIN regular_task_main */
@@ -132,7 +135,13 @@ void regular_task_main(void *argument)
         }
         if (regular_event & OS_EVENT_CYCLIC_5MS)
         {
+        	float q0, q1, q2, q3;
+			periph_imu_update_quat();
+			periph_imu_get_quat(&q0, &q1, &q2, &q3);
 
+			roll = 180.0 / 3.14 * atan2(2 * (q0 * q1 + q2 * q3), 1 - 2 * (q1 * q1 + q2 * q2));
+			pitch = 180.0 / 3.14 * asin(2 * (q0 * q2 - q3 * q1));
+			yaw = 180.0 / 3.14 * atan2f(q0 * q3 + q1 * q2, 0.5f - q2 * q2 - q3 * q3);
         }
     }
     /* USER CODE END regular_task_main */

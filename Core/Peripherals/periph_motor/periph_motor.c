@@ -9,7 +9,7 @@ bldc_motor_handle_t motorbr_handle = NULL;
 
 err_code_t periph_motor_init(void)
 {
-	motorfl_handle = bldc_motor_init();
+    motorfl_handle = bldc_motor_init();
     bldc_motor_cfg_t motorfl_cfg = {
         .kv = 3800,
         .set_pwm = hw_intf_motorfl_set_pwm,
