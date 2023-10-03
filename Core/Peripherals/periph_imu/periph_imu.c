@@ -54,7 +54,8 @@ err_code_t periph_imu_init(void)
         .gfs_sel = MPU6050_GFS_SEL_2000,
         .afs_sel = MPU6050_AFS_SEL_8G,
         .read_bytes = hw_intf_mpu6050_read_bytes,
-        .write_bytes = hw_intf_mpu6050_write_bytes
+        .write_bytes = hw_intf_mpu6050_write_bytes,
+		.delay = HAL_Delay
     };
     imu_config_mpu6050(imu_handle, mpu6050_cfg);
 

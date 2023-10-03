@@ -46,6 +46,7 @@ typedef StaticEventGroup_t osStaticEventGroupDef_t;
 /* USER CODE END PM */
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
+float roll, pitch, yaw;
 /* USER CODE END Variables */
 /* Definitions for regular_task */
 osThreadId_t regular_taskHandle;
@@ -116,7 +117,6 @@ void MX_FREERTOS_Init(void) {
   * @retval None
   */
 /* USER CODE END Header_regular_task_main */
-float roll, pitch, yaw;
 void regular_task_main(void *argument)
 {
     /* USER CODE BEGIN regular_task_main */
