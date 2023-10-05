@@ -40,6 +40,7 @@ typedef StaticEventGroup_t osStaticEventGroupDef_t;
 
 #define OS_EVENT_CYCLIC_1MS     1
 #define OS_EVENT_CYCLIC_5MS     2
+#define OS_EVENT_CYCLIC_500MS   3
 /* USER CODE END PD */
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
@@ -135,13 +136,17 @@ void regular_task_main(void *argument)
         }
         if (regular_event & OS_EVENT_CYCLIC_5MS)
         {
-        	float q0, q1, q2, q3;
-			periph_imu_update_quat();
-			periph_imu_get_quat(&q0, &q1, &q2, &q3);
+            float q0, q1, q2, q3;
+            periph_imu_update_quat();
+            periph_imu_get_quat(&q0, &q1, &q2, &q3);
 
-			roll = 180.0 / 3.14 * atan2(2 * (q0 * q1 + q2 * q3), 1 - 2 * (q1 * q1 + q2 * q2));
-			pitch = 180.0 / 3.14 * asin(2 * (q0 * q2 - q3 * q1));
-			yaw = 180.0 / 3.14 * atan2f(q0 * q3 + q1 * q2, 0.5f - q2 * q2 - q3 * q3);
+            roll = 180.0 / 3.14 * atan2(2 * (q0 * q1 + q2 * q3), 1 - 2 * (q1 * q1 + q2 * q2));
+            pitch = 180.0 / 3.14 * asin(2 * (q0 * q2 - q3 * q1));
+            yaw = 180.0 / 3.14 * atan2f(q0 * q3 + q1 * q2, 0.5f - q2 * q2 - q3 * q3);
+        }
+        if (regular_event & OS_EVENT_CYCLIC_500MS)
+        {
+
         }
     }
     /* USER CODE END regular_task_main */
@@ -157,6 +162,10 @@ void cyclic_timer_callback(void *argument)
     if (cnt_cycle == 4)
     {
         osEventFlagsSet(regular_eventHandle, OS_EVENT_CYCLIC_5MS);
+    }
+    else if (cnt_cycle == 499)
+    {
+        osEventFlagsSet(regular_eventHandle, OS_EVENT_CYCLIC_5MS | OS_EVENT_CYCLIC_500MS);
     }
     else
     {

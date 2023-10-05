@@ -90,7 +90,7 @@ err_code_t periph_imu_init(void)
 
     imu_madgwick_cfg_t imu_madgwick_cfg = {
         .beta = 0.1f,
-        .sample_freq = 1000.0f
+        .sample_freq = 200.0f
     };
     err_ret = imu_madgwick_set_config(imu_madgwick_handle, imu_madgwick_cfg);
     if (err_ret != ERR_CODE_SUCCESS)
