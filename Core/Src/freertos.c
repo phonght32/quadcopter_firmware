@@ -24,6 +24,7 @@
 #include "cmsis_os.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "serial_log.h"
 #include "periph_imu.h"
 #include "math.h"
 /* USER CODE END Includes */
@@ -146,7 +147,7 @@ void regular_task_main(void *argument)
         }
         if (regular_event & OS_EVENT_CYCLIC_500MS)
         {
-
+        	SERIAL_LOGI("RTOS", "roll: %7.4f\t\tpitch: %7.4f\t\tyaw: %7.4f\t", roll, pitch, yaw);
         }
     }
     /* USER CODE END regular_task_main */

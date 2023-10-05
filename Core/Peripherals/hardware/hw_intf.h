@@ -223,6 +223,26 @@ err_code_t hw_intf_motorbr_start(void);
  */
 err_code_t hw_intf_motorbr_stop(void);
 
+/*
+ * @brief   Serial log function interface.
+ *
+ * @param   data Pointer data.
+ * @param   len Length.
+ * @param   timeout_ms Timeout in miliseconds.
+ *
+ * @return 	None
+ */
+void hw_intf_log_func(uint8_t *data, uint16_t len, uint32_t timeout_ms);
+
+/*
+ * @brief   Serial log get tick function.
+ *
+ * @param   None.
+ *
+ * @return 	Tick time.
+ */
+uint32_t hw_intf_log_get_tick_func(void);
+
 #ifdef __cplusplus
 }
 #endif

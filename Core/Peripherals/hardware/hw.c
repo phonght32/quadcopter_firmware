@@ -3,6 +3,7 @@
 #include "spi.h"
 #include "gpio.h"
 #include "i2c.h"
+#include "usart.h"
 #include "hw_intf.h"
 #include "mpu6500_register.h"
 #include "mpu6050_register.h"
@@ -30,6 +31,8 @@
 #define HW_MOTORBR_TIM 				TIM1
 #define HW_MOTORBR_TIM_CCR 			CCR4
 #define HW_MOTORBR_TIM_CHANNEL 		TIM_CHANNEL_4
+
+#define HW_SERIAL_LOG_UART_HANDLE  	huart4
 
 
 err_code_t hw_intf_mpu6500_read_bytes(uint8_t reg_addr, uint8_t *buf, uint16_t len, uint32_t timeout_ms)
@@ -232,4 +235,14 @@ err_code_t hw_intf_motorbr_stop(void)
 	HAL_TIM_PWM_Stop(&HW_MOTORBR_TIM_HANDLE, HW_MOTORBR_TIM_CHANNEL);
 
 	return ERR_CODE_SUCCESS;
+}
+
+void hw_intf_log_func(uint8_t *data, uint16_t len, uint32_t timeout_ms)
+{
+	HAL_UART_Transmit(&HW_SERIAL_LOG_UART_HANDLE, (uint8_t*)data, len, timeout_ms);
+}
+
+uint32_t hw_intf_log_get_tick_func(void)
+{
+	return HAL_GetTick();
 }
