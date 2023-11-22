@@ -1,4 +1,4 @@
-#include "imu_public.h"
+#include "imu.h"
 #include "imu_madgwick.h"
 #include "periph_imu.h"
 #include "hw_intf.h"
@@ -8,8 +8,8 @@ imu_madgwick_handle_t imu_madgwick_handle = NULL;
 
 err_code_t periph_imu_init(void)
 {
-	/* Config MPU6500 and AK8963 */
-	imu_handle = imu_init();
+    /* Config MPU6500 and AK8963 */
+    imu_handle = imu_init();
     if (imu_handle == NULL)
     {
         return ERR_CODE_NULL_PTR;
@@ -18,7 +18,6 @@ err_code_t periph_imu_init(void)
     err_code_t err_ret;
 
     imu_cfg_t imu_cfg = {
-        .mpu_type = MPU_TYPE_MPU6050,
         .accel_bias_x = 0,
         .accel_bias_y = 0,
         .accel_bias_z = 0,
@@ -30,46 +29,12 @@ err_code_t periph_imu_init(void)
         .mag_hard_iron_bias_z = 0,
         .mag_soft_iron_bias_x = 0,
         .mag_soft_iron_bias_y = 0,
-        .mag_soft_iron_bias_z = 0
+        .mag_soft_iron_bias_z = 0,
+        .func_delay = HAL_Delay,
+        .mpu6050_read_bytes = hw_intf_mpu6050_read_bytes,
+        .mpu6050_write_bytes = hw_intf_mpu6050_write_bytes
     };
     err_ret = imu_set_config(imu_handle, imu_cfg);
-    if (err_ret != ERR_CODE_SUCCESS)
-    {
-        return err_ret;
-    }
-
-    // mpu6500_cfg_t mpu6500_cfg = {
-    //     .clksel = MPU6500_CLKSEL_AUTO,
-    //     .dlpf_cfg = MPU6500_41ACEL_42GYRO_BW_HZ,
-    //     .sleep_mode = MPU6500_DISABLE_SLEEP_MODE,
-    //     .gfs_sel = MPU6500_GFS_SEL_2000,
-    //     .afs_sel = MPU6500_AFS_SEL_8G,
-    //     .read_bytes = hw_intf_mpu6500_read_bytes,
-    //     .write_bytes = hw_intf_mpu6500_write_bytes,
-    //     .delay = HAL_Delay
-    // };
-    // imu_config_mpu6500(imu_handle, mpu6500_cfg);
-
-    // ak8963_cfg_t ak8963_cfg = {
-    //     .opr_mode = AK8963_MODE_CONT_MEASUREMENT_2,
-    //     .mfs_sel = AK8963_MFS_16BIT,
-    //     .read_bytes = hw_intf_ak8963_read_bytes,
-    //     .write_bytes = hw_intf_ak8963_write_bytes,
-    //     .delay = HAL_Delay
-    // };
-    // imu_config_ak8963(imu_handle, ak8963_cfg);
-
-    mpu6050_cfg_t mpu6050_cfg = {
-        .clksel = MPU6050_CLKSEL_X_GYRO_REF,
-        .dlpf_cfg = MPU6050_44ACCEL_42GYRO_BW_HZ,
-        .sleep_mode = MPU6050_DISABLE_SLEEP_MODE,
-        .gfs_sel = MPU6050_GFS_SEL_2000,
-        .afs_sel = MPU6050_AFS_SEL_8G,
-        .read_bytes = hw_intf_mpu6050_read_bytes,
-        .write_bytes = hw_intf_mpu6050_write_bytes,
-		.delay = HAL_Delay
-    };
-    err_ret = imu_config_mpu6050(imu_handle, mpu6050_cfg);
     if (err_ret != ERR_CODE_SUCCESS)
     {
         return err_ret;
