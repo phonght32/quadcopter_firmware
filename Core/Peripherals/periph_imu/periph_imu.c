@@ -46,6 +46,8 @@ err_code_t periph_imu_init(void)
         return err_ret;
     }
 
+    imu_auto_calib(imu_handle);
+
     /* Config madgwick filter */
     imu_madgwick_handle = imu_madgwick_init();
     if (imu_madgwick_handle == NULL)
@@ -55,7 +57,7 @@ err_code_t periph_imu_init(void)
 
     imu_madgwick_cfg_t imu_madgwick_cfg = {
         .beta = 0.1f,
-        .sample_freq = 200.0f
+        .sample_freq = 7000.0f
     };
     err_ret = imu_madgwick_set_config(imu_madgwick_handle, imu_madgwick_cfg);
     if (err_ret != ERR_CODE_SUCCESS)
