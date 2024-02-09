@@ -60,7 +60,6 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/quadcopter_firmware/components/imu/ak8963}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/quadcopter_firmware/components/imu/mpu6050}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/quadcopter_firmware/components/bldc_motor}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/quadcopter_firmware/components/imu_filter/madgwick}&quot;"/>
 									<listOptionValue builtIn="false" value="../Middlewares/Third_Party/FreeRTOS/Source/include"/>
 									<listOptionValue builtIn="false" value="../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F"/>
 									<listOptionValue builtIn="false" value="../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2"/>
@@ -68,6 +67,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/quadcopter_firmware/Core/Peripherals/periph_motor}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/quadcopter_firmware/Core/Peripherals/hardware}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/quadcopter_firmware/components/serial_log}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/quadcopter_firmware/components/imu_filter}&quot;"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.1735464642" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
 							</tool>
