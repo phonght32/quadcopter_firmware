@@ -1,5 +1,5 @@
 #include "imu.h"
-#include "imu_madgwick.h"
+#include "madgwick/imu_madgwick.h"
 #include "periph_imu.h"
 #include "hw_intf.h"
 
@@ -114,18 +114,12 @@ err_code_t periph_imu_get_quat(float *q0, float *q1, float *q2, float* q3)
     }
 
     err_code_t err_ret;
-    imu_madgwick_quat_t quat_data;
 
-    err_ret = imu_madgwick_get_quaternion(imu_madgwick_handle, &quat_data);
+    err_ret = imu_madgwick_get_quaternion(imu_madgwick_handle, q0, q1, q2, q3);
     if (err_ret != ERR_CODE_SUCCESS)
     {
         return err_ret;
     }
-
-    *q0 = quat_data.q0;
-    *q1 = quat_data.q1;
-    *q2 = quat_data.q2;
-    *q3 = quat_data.q3;
 
     return ERR_CODE_SUCCESS;
 }
